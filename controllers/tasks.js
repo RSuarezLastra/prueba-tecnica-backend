@@ -9,7 +9,7 @@ const getAllTasks = async (req, res = response) => {
   const tasks = await Task.find({ user });
   const userFound = await User.findById(user);
 
-  if(tasks == 0) {
+  if (tasks == 0) {
     return res.status(203).json({
       ok: false,
       msg: 'No hay tareas creadas'
@@ -51,7 +51,52 @@ const newTask = async (req, res = response) => {
   }
 }
 
+const updateTask = async (req, res = response) => {
+
+  const taskId = req.params.id;
+
+  try {
+
+    const task = await Task.findById(taskId);
+
+    if (!task) {
+      return res.status(404).json({
+        ok: false,
+        msg: 'No existe una tarea con ese id'
+      })
+    }
+
+    if (task.user.toString() !== req.uid) {
+      return res.status(401).json({
+        ok: false,
+        msg: 'No tiene privilegio de editar este tarea'
+      })
+    }
+
+    const newTask = {
+      ...req.body,
+      user: req.uid
+    }
+
+    const updatedTask = await Task.findByIdAndUpdate(taskId, newTask, { new: true });
+
+    res.status(200).json({
+      ok: true,
+      msg: 'Tarea actualizada',
+      updatedTask
+    });
+
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      ok: true,
+      msg: 'Error al actualizar tarea',
+    });
+  }
+}
+
 module.exports = {
   newTask,
-  getAllTasks
+  getAllTasks,
+  updateTask
 }
