@@ -23,7 +23,9 @@ server.use((req, res, next) => {
 
 app.use(express.json());
 
-
+app.get('/', (req, res) => {
+  res.send('Hello, Vercel!');
+});
 //Rutas
 app.use('/api/auth', authRouter);
 app.use('/api/tasks', tasksRouter)
