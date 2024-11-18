@@ -26,6 +26,6 @@ router.post('/login',
   loginUser
 )
 
-router.get('renew', validateJwt, renewToken);
+router.get('/renew', validateJwt, renewToken);
 
 module.exports = router;
