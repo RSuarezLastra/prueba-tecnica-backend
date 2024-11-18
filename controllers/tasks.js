@@ -83,7 +83,7 @@ const updateTask = async (req, res = response) => {
     res.status(200).json({
       ok: true,
       msg: 'Tarea actualizada',
-      updatedTask
+      task: updatedTask
     });
 
   } catch (error) {
