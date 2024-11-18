@@ -3,7 +3,8 @@ const { response } = require('express');
 const newTask = async (req, res = response) => {
   try {
 
-
+    const { title, description } = req.body;
+    
 
   } catch (error) {
     console.log(error);

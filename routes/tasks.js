@@ -5,7 +5,7 @@ const { newTask} = require('../controllers/tasks');
 
 const router = Router();
 
-router.post('/register',
+router.post('/new',
   [
     check('title', 'El titulo es obligatorio').not().isEmpty(),
     check('description', 'La descripción es requerida').not().isEmpty(),
