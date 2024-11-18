@@ -1,12 +1,14 @@
 const { Router } = require('express');
 const { check } = require('express-validator');
 const { fieldValidator } = require('../helpers/fieldValidator');
-const { newTask } = require('../controllers/tasks');
+const { newTask, getAllTasks } = require('../controllers/tasks');
 const { validateJwt } = require('../middlewares/jwt-validate');
 
 const router = Router();
 
 router.use(validateJwt);
+
+router.get('/', getAllTasks);
 
 router.post('/new',
   [

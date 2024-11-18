@@ -1,5 +1,27 @@
 const { response } = require('express');
 const Task = require('../models/Task');
+const User = require('../models/User');
+
+const getAllTasks = async (req, res = response) => {
+
+  const user = req.uid;
+
+  const tasks = await Task.find({ user });
+  const userFound = await User.findById(user);
+
+  if(tasks == 0) {
+    return res.status(203).json({
+      ok: false,
+      msg: 'No hay tareas creadas'
+    })
+  }
+
+  return res.status(200).json({
+    ok: true,
+    msg: `tareas del usuario ${userFound.name}`,
+    tasks
+  });
+}
 
 const newTask = async (req, res = response) => {
 
@@ -31,4 +53,5 @@ const newTask = async (req, res = response) => {
 
 module.exports = {
   newTask,
+  getAllTasks
 }
