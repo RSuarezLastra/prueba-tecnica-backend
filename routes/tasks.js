@@ -1,7 +1,7 @@
 const { Router } = require('express');
 const { check } = require('express-validator');
 const { fieldValidator } = require('../helpers/fieldValidator');
-const { newTask, getAllTasks, updateTask } = require('../controllers/tasks');
+const { newTask, getAllTasks, updateTask, deleteTask } = require('../controllers/tasks');
 const { validateJwt } = require('../middlewares/jwt-validate');
 
 const router = Router();
@@ -19,7 +19,7 @@ router.post('/new',
   newTask
 );
 
-router.put('/update',
+router.put('/update/:id',
   [
     check('title', 'El titulo es obligatorio').not().isEmpty(),
     check('description', 'La descripción es requerida').not().isEmpty(),
@@ -27,6 +27,8 @@ router.put('/update',
   ],
   updateTask
 )
+
+router.delete('/delete/:id', deleteTask);
 
 
 module.exports = router;

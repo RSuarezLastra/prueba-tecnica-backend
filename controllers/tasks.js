@@ -95,8 +95,47 @@ const updateTask = async (req, res = response) => {
   }
 }
 
+const deleteTask = async (req, res = response) => {
+
+  const taskId = req.params.id;
+
+  try {
+
+    const task = await Task.findById(taskId);
+
+    if (!task) {
+      return res.status(404).json({
+        ok: false,
+        msg: 'No existe una tarea con ese id'
+      })
+    }
+
+    if (task.user.toString() !== req.uid) {
+      return res.status(401).json({
+        ok: false,
+        msg: 'No tiene privilegio de editar este tarea'
+      })
+    }
+
+    await Task.findByIdAndDelete(taskId);
+
+    res.status(200).json({
+      ok: true,
+      msg: 'Tarea Eliminada'
+    });
+
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      ok: true,
+      msg: 'Error al eliminar tarea',
+    });
+  }
+}
+
 module.exports = {
   newTask,
   getAllTasks,
-  updateTask
+  updateTask,
+  deleteTask
 }
