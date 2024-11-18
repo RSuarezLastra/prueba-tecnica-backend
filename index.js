@@ -1,6 +1,7 @@
 const express = require('express');
 const { dbConnection } = require('./database/config');
 require('dotenv').config();
+const cors = require('cors');
 const authRouter  = require('./routes/auth');
 const tasksRouter  = require('./routes/tasks');
 
@@ -11,6 +12,8 @@ const app = express();
 
 // Conexion a base de datos
 dbConnection();
+
+app.use(cors());
 
 app.use(express.json());
 
