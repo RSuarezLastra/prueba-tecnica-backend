@@ -13,7 +13,10 @@ const app = express();
 // Conexion a base de datos
 dbConnection();
 
-app.use(cors());
+app.use(cors({
+  origin: '*', 
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+}));
 
 app.use(express.json());
 
