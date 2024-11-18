@@ -10,6 +10,8 @@ const app = express();
 // Conexion a base de datos
 dbConnection();
 
+app.use(express.json());
+
 //Rutas
 app.use('/api/auth', authRouter);
 
